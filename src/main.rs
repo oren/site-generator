@@ -15,19 +15,18 @@ fn read_file(file_path: String) -> String {
 
     // Create a path to the desired file
     let path = Path::new(s_slice);
-    let display = path.display();
 
     // Open the path in read-only mode, returns `io::Result<File>`
     let mut file = match File::open(&path) {
-        Err(why) => panic!("couldn't open {}: {}", display, why),
+        Err(why) => panic!("couldn't open file. {}:", why),
         Ok(file) => file,
     };
 
     // Read the file contents into a string, returns `io::Result<usize>`
     let mut s = String::new();
     match file.read_to_string(&mut s) {
-        Err(why) => panic!("couldn't read {}: {}", display, why),
-        Ok(_) => print!("{} contains:\n{}", display, s),
+        Err(why) => panic!("couldn't read file. {}", why),
+        Ok(_) => {},
     }
     // `file` goes out of scope, and the "index.md" file gets closed
 

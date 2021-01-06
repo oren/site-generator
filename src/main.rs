@@ -5,8 +5,16 @@ use std::io::prelude::*;
 use std::path::Path;
 
 fn main() {
+    let text = read_file(String::from("index.md"));
+    println!("{}", text);
+}
+
+fn read_file(file_path: String) -> String {
+    let s: String = file_path.to_owned();
+    let s_slice: &str = &s[..];
+
     // Create a path to the desired file
-    let path = Path::new("index.md");
+    let path = Path::new(s_slice);
     let display = path.display();
 
     // Open the path in read-only mode, returns `io::Result<File>`
@@ -21,6 +29,7 @@ fn main() {
         Err(why) => panic!("couldn't read {}: {}", display, why),
         Ok(_) => print!("{} contains:\n{}", display, s),
     }
+    // `file` goes out of scope, and the "index.md" file gets closed
 
-    // `file` goes out of scope, and the "hello.txt" file gets closed
+    String::from(s)
 }
